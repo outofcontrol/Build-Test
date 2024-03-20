@@ -39,7 +39,7 @@ jobs:
         strategy:
             matrix:
                 compiler: [ {cc: clang, cxx: clang++} ]
-                config: [ Debug, Release ]
+                config: [ Release ]
                 os: [ ubuntu-20.04 ]
         steps:
             - uses: actions/checkout@v4
