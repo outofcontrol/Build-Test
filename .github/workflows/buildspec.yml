@@ -1,0 +1,20 @@
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+    commands:
+      - apt update
+      - apt install --yes --no-install-recommends libwayland-dev libxrandr-dev
+      - sysctl vm.mmap_rnd_bits=28
+  pre_build:
+    commands:
+      - echo Installing CMake version 3.17.2
+      - wget https://github.com/Kitware/CMake/releases/download/v3.17.2/cmake-3.17.2-Linux-x86_64.sh
+      - chmod +x cmake-3.17.2-Linux-x86_64.sh
+      - ./cmake-3.17.2-Linux-x86_64.sh --skip-license --prefix=/usr/local
+  build:
+    commands:
+      - cmake -S. -B build -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=ON -D UPDATE_DEPS=ON -D LOADER_ENABLE_ADDRESS_SANITIZER=ON -D BUILD_WERROR=ON -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_C_COMPILER=clang
+      - cmake --build build
+      - ctest --output-on-failure --test-dir build/
+      - cmake --install build --prefix /tmp
