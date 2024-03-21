@@ -2,10 +2,14 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      python: 3.7
     commands:
       - apt update
+      - apt install --yes software-properties-common
+      - add-apt-repository ppa:deadsnakes/ppa
+      - apt update
+      - apt install --yes python3.7 python3.7-venv python3.7-dev
+      - python3.7 -m ensurepip
+      - python3.7 -m pip install --upgrade pip
       - apt install --yes --no-install-recommends libwayland-dev libxrandr-dev
       - sysctl vm.mmap_rnd_bits=28
   pre_build:
