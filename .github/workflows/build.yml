@@ -30,7 +30,7 @@ jobs:
         run: |
           aws codebuild update-project \
             --name Vulka-Loader-Test \
-            --compute-type BUILD_GENERAL1_XLARGE
+            --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_XLARGE,image=aws/codebuild/standard:5.0"
           
       - name: Start CodeBuild
         id: codebuild
