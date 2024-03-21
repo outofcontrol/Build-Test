@@ -37,7 +37,7 @@ jobs:
       - name: Build CodeBuild Project Compute Type
         run: |          
           aws codebuild create-project \
-              --name Vulka-Loader-Test \
+              --name Vulkan-Loader-Test \
               --source "type=GITHUB,location=https://github.com/outofcontrol/Build-Test" \
               --artifacts "type=NO_ARTIFACTS" \
               --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_2XLARGE,image=aws/codebuild/standard:5.0" \
