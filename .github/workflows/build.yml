@@ -47,7 +47,7 @@ jobs:
         id: codebuild
         run: |
           buildId=$(aws codebuild start-build \
-            --project-name Vulka-Loader-Test \
+            --project-name Vulkan-Loader-Test \
             --query 'build.id' \
             --output text)
           echo "::set-output name=buildId::$buildId"
