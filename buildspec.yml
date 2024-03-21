@@ -29,6 +29,9 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: 'build' # Adjust this based on where your artifacts are generated
   name: vulkan-loader-build-output-$(date +%Y-%m-%d)
+  base-directory: '/tmp/lib' # Adjust this based on where your artifacts are generated
   discard-paths: yes
+  s3:
+    bucket: khr-github-build-artifacts
+    path: today/
