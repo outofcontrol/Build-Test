@@ -26,12 +26,23 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Update CodeBuild Project Compute Type
-        run: |
-          aws codebuild update-project \
-            --name Vulka-Loader-Test \
-            --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_XLARGE,image=aws/codebuild/standard:5.0"
-          
+      # - name: Update CodeBuild Project Compute Type
+      #   run: |
+      #     aws codebuild update-project \
+      #       --name Vulka-Loader-Test \
+      #       --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_XLARGE,image=aws/codebuild/standard:5.0"
+
+      # Choose your own OS and AMI
+      #
+      - name: Build CodeBuild Project Compute Type
+        run: |          
+          aws codebuild create-project \
+              --name Vulka-Loader-Test \
+              --source "type=GITHUB,location=https://github.com/outofcontrol/Build-Test" \
+              --artifacts "type=NO_ARTIFACTS" \
+              --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_2XLARGE,image=aws/codebuild/standard:5.0" \
+              --service-role arn:aws:iam::452667803910:role/service-role/codebuild-Vulka-Loader-Test-service-role
+
       - name: Start CodeBuild
         id: codebuild
         run: |
