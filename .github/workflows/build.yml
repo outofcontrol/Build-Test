@@ -26,6 +26,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Start AWS CodeBuild
+      - name: Start CodeBuild
+        id: codebuild
         run: |
-          aws codebuild start-build --project-name Vulka-Loader-Test
+          buildId=$(aws codebuild start-build --project-name <YOUR_CODEBUILD_PROJECT_NAME> --query 'build.id' --output text)
+          echo "::set-output name=buildId::$buildId"
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Wait for CodeBuild result
+        run: |
+          aws codebuild batch-get-builds --ids ${{ steps.codebuild.outputs.buildId }} --query 'builds[].buildStatus' --output text
+        env:
+          AWS_DEFAULT_REGION: us-east-1
