@@ -26,10 +26,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Update CodeBuild Project Compute Type
+        run: |
+          aws codebuild update-project \
+            --name Vulka-Loader-Test \
+            --compute-type BUILD_GENERAL1_XLARGE
+          
       - name: Start CodeBuild
         id: codebuild
         run: |
-          buildId=$(aws codebuild start-build --project-name Vulka-Loader-Test --query 'build.id' --output text)
+          buildId=$(aws codebuild start-build \
+            --project-name Vulka-Loader-Test \
+            --query 'build.id' \
+            --output text)
           echo "::set-output name=buildId::$buildId"
         env:
           AWS_DEFAULT_REGION: us-east-1
