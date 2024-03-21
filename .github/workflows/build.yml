@@ -44,7 +44,7 @@ jobs:
           aws codebuild create-project \
               --name Vulkan-Loader-Test \
               --source "type=GITHUB,location=https://github.com/outofcontrol/Build-Test" \
-              --artifacts "type=NO_ARTIFACTS" \
+              --artifacts "type=S3,location=khr-github-build-artifacts,packaging=ZIP" \
               --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_2XLARGE,image=aws/codebuild/standard:5.0" \
               --service-role arn:aws:iam::452667803910:role/service-role/codebuild-Vulka-Loader-Test-service-role
 
@@ -54,7 +54,8 @@ jobs:
           buildId=$(aws codebuild start-build \
             --project-name Vulkan-Loader-Test \
             --query 'build.id' \
-            --output text)
+            --output text \
+            --environment-variables-override name=PR_NUMBER,value=${{ github.event.pull_request.number }},type=PLAINTEXT)
           echo "::set-output name=buildId::$buildId"
         env:
           AWS_DEFAULT_REGION: us-east-1

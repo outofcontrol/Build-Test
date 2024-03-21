@@ -26,3 +26,9 @@ phases:
       - cmake --build build
       - ctest --output-on-failure --test-dir build/
       - cmake --install build --prefix /tmp
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build' # Adjust this based on where your artifacts are generated
+  name: vulkan-loader-build-output-$(date +%Y-%m-%d)
+  discard-paths: yes
