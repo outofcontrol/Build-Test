@@ -31,7 +31,7 @@ jobs:
       - name: Check if CodeBuild project exists
         id: check_project
         run: |
-          PROJECT_EXISTS=$(aws codebuild list-projects | grep 'Vulkan-Loader-Test')
+          PROJECT_EXISTS=$(aws codebuild list-projects | grep 'Vulkan-Loader-Test' || true)
           if [ -n "$PROJECT_EXISTS" ]; then
             echo "Project already exists. Skipping creation."
             echo "::set-output name=exists::true"
