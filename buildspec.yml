@@ -1,5 +1,8 @@
 version: 0.2
 
+env:
+  variables:
+    ARTIFACT_NAME: "Vulkan-Loader-Test-$CODEBUILD_START_TIME"
 phases:
   install:
     commands:
@@ -29,9 +32,6 @@ phases:
 artifacts:
   files:
     - '**/*'
-  name: vulkan-loader-build-output-$(date +%Y-%m-%d)
-  base-directory: '/tmp/lib' # Adjust this based on where your artifacts are generated
+  name: $ARTIFACT_NAME
+  base-directory: '/tmp/lib'
   discard-paths: yes
-  s3:
-    bucket: khr-github-build-artifacts
-    path: today/

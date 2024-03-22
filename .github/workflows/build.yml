@@ -34,9 +34,9 @@ jobs:
           PROJECT_EXISTS=$(aws codebuild list-projects | grep 'Vulkan-Loader-Test' || true)
           if [ -n "$PROJECT_EXISTS" ]; then
             echo "Project already exists. Skipping creation."
-            echo "::set-output name=exists::true"
+            echo "exists=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=exists::false"
+            echo "exists=false" >> $GITHUB_OUTPUT
           fi
       - name: Build CodeBuild Project Compute Type
         if: steps.check_project.outputs.exists == 'false'
