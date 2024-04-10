@@ -1,8 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    ARTIFACT_NAME: "Vulkan-Loader-Test-$CODEBUILD_START_TIME"
 phases:
   install:
     commands:
@@ -32,6 +29,6 @@ phases:
 artifacts:
   files:
     - '**/*'
-  name: $ARTIFACT_NAME
-  base-directory: '/tmp/lib'
+  base-directory: 'build' # Adjust this based on where your artifacts are generated
+  name: vulkan-loader-build-output-$(date +%Y-%m-%d)
   discard-paths: yes
