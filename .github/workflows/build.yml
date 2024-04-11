@@ -48,6 +48,9 @@
 #               --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_LARGE,image=aws/codebuild/standard:5.0" \
 #               --service-role arn:aws:iam::452667803910:role/service-role/codebuild-Vulka-Loader-Test-service-role
 
+
+      # Choose your own OS and AMI
+      #
 #       - name: Start CodeBuild
 #         id: codebuild
 #         run: |
