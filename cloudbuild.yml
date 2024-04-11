@@ -13,8 +13,19 @@ steps:
         -D BUILD_WERROR=ON \
         -D CMAKE_CXX_COMPILER=g++ \
         -D CMAKE_C_COMPILER=gcc && \
-        cmake --build build && \
-        ctest --output-on-failure --test-dir build/ && \
+        cmake --build build
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |
+        ctest --output-on-failure --test-dir build/
+
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |
         cmake --install build --prefix /tmp
         
 # This section is to specify artifacts to be stored
@@ -22,7 +33,7 @@ artifacts:
   objects:
     location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
     paths:
-      - '/tmp/**'
+      - '/tmp/lib/**'
     
 # Substitutions
 options:
