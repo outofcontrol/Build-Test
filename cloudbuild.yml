@@ -27,13 +27,15 @@ steps:
       - '-c'
       - |
         cmake --install build --prefix /tmp
-        
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', '-r', '/tmp/lib', 'gs://test-ooc/${_ARTIFACT_NAME}/']
 # This section is to specify artifacts to be stored
-artifacts:
-  objects:
-    location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
-    paths:
-      - '/tmp/lib/**'
+# artifacts:
+#   objects:
+#     location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
+#     paths:
+#       - '/tmp/lib/**'
     
 # Substitutions
 options:
