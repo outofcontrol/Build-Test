@@ -28,7 +28,7 @@ steps:
       - |
         cmake --install build --prefix /tmp
 
-  - name: 'gcr.io/cloud-builders/gsutil'
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
     args: ['-m', 'cp', '-r', '/tmp/lib', 'gs://test-ooc/${_ARTIFACT_NAME}/']
 # This section is to specify artifacts to be stored
 # artifacts:
