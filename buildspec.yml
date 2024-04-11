@@ -1,37 +1,17 @@
-version: 0.2
+# version: 0.2
 
-phases:
-  install:
-    commands:
-      - apt update
-      - apt install --yes software-properties-common
-      - add-apt-repository ppa:deadsnakes/ppa
-      - add-apt-repository ppa:ubuntu-toolchain-r/test
-      - apt update
-      - apt install --yes python3.7 python3.7-venv python3.7-dev
-      - apt install --yes clang
-      - python3.7 -m ensurepip
-      - python3.7 -m pip install --upgrade pip
-      - apt install --yes --no-install-recommends libwayland-dev libxrandr-dev
-      - sysctl vm.mmap_rnd_bits=28
-  pre_build:
-    commands:
-      - echo Installing CMake version 3.17.2
-      - wget https://github.com/Kitware/CMake/releases/download/v3.17.2/cmake-3.17.2-Linux-x86_64.sh
-      - chmod +x cmake-3.17.2-Linux-x86_64.sh
-      - ./cmake-3.17.2-Linux-x86_64.sh --skip-license --prefix=/usr/local
-  build:
-    commands:
-      - cmake -S. -B build -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=ON -D UPDATE_DEPS=ON -D LOADER_ENABLE_ADDRESS_SANITIZER=ON -D BUILD_WERROR=ON -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_C_COMPILER=clang
-      - cmake --build build
-      - ctest --output-on-failure --test-dir build/
-      - cmake --install build --prefix /tmp
-artifacts:
-  files:
-    - '**/*'
-  name: vulkan-loader-build-output-$(date +%Y-%m-%d)
-  base-directory: '/tmp/lib' # Adjust this based on where your artifacts are generated
-  discard-paths: yes
-  s3:
-    bucket: khr-github-build-artifacts
-    path: today/
+#   build:
+#     commands:
+#       - cmake -S. -B build -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=ON -D UPDATE_DEPS=ON -D LOADER_ENABLE_ADDRESS_SANITIZER=ON -D BUILD_WERROR=ON -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_C_COMPILER=clang
+#       - cmake --build build
+#       - ctest --output-on-failure --test-dir build/
+#       - cmake --install build --prefix /tmp
+# artifacts:
+#   files:
+#     - '**/*'
+#   name: vulkan-loader-build-output-$(date +%Y-%m-%d)
+#   base-directory: '/tmp/lib' # Adjust this based on where your artifacts are generated
+#   discard-paths: yes
+#   s3:
+#     bucket: khr-github-build-artifacts
+#     path: today/

@@ -1,0 +1,35 @@
+steps:
+  # Pre-build configuration
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - | 
+        cmake -S. -B build -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=ON -D UPDATE_DEPS=ON -D LOADER_ENABLE_ADDRESS_SANITIZER=ON -D BUILD_WERROR=ON -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_C_COMPILER=clang &&
+        cmake --build build
+
+
+  # Build the project
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - ctest --output-on-failure --test-dir build/
+
+  # Post-build tests
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - cmake --install build --prefix /tmp
+
+# This section is to specify artifacts to be stored
+artifacts:
+  objects:
+    location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
+    paths:
+      - '/tmp/lib/**'
+    
+# Substitutions
+substitutions:
+  _ARTIFACT_NAME: 'Vulkan-Loader-$BUILD_ID'
