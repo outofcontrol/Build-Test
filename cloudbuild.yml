@@ -25,7 +25,7 @@ steps:
       - cmake --install build --prefix /tmp
 
   # Check if files in correct place
-  - name: 'ubuntu'
+  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
     entrypoint: 'bash'
     args:
     - '-c'
@@ -40,10 +40,10 @@ artifacts:
   objects:
     location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
     paths:
-      - '/workspace/tmp/lib/**'
+      - '/tmp/lib/**'
     
 # Substitutions
 options:
   automapSubstitutions: true
 substitutions:
-  _ARTIFACT_NAME: 'Vulkan-Loader-$BUILD_ID'
+  _ARTIFACT_NAME: 'Vulkan-Loader-$SHORT_SHA'
