@@ -25,6 +25,7 @@
  * Author: Charles Giessen <charles@lunarg.com>
  */
 
+
 #include "test_environment.h"
 
 #include <mutex>
