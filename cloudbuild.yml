@@ -1,32 +1,28 @@
 steps:
   # Build configuration
   - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
-    entrypoint: 'bash'
+    entrypoint: '/bin/bash'
     args:
       - '-c'
       - | 
-        cmake -S. -B build -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=ON -D UPDATE_DEPS=ON -D LOADER_ENABLE_ADDRESS_SANITIZER=ON -D BUILD_WERROR=ON -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_C_COMPILER=clang &&
-        cmake --build build &&
-        ctest --output-on-failure --test-dir build/ &&
+        cmake -S. -B build \
+        -D CMAKE_BUILD_TYPE=Debug \
+        -D BUILD_TESTS=ON \
+        -D UPDATE_DEPS=ON \
+        -D LOADER_ENABLE_ADDRESS_SANITIZER=ON \
+        -D BUILD_WERROR=ON \
+        -D CMAKE_CXX_COMPILER=g++ \
+        -D CMAKE_C_COMPILER=gcc && \
+        cmake --build build && \
+        ctest --output-on-failure --test-dir build/ && \
         cmake --install build --prefix /tmp
-
-  # Check if files in correct place
-  - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
-    entrypoint: 'bash'
-    args:
-    - '-c'
-    - |
-      echo "Listing /tmp/lib:"
-      ls -alh /tmp/lib/ || echo "/tmp/lib does not exist"
-      echo "Listing /workspace/tmp/lib:"
-      ls -alh /workspace/tmp/lib/ || echo "/workspace/tmp/lib does not exist"
-    
+        
 # This section is to specify artifacts to be stored
 artifacts:
   objects:
     location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
     paths:
-      - '/tmp/lib/**'
+      - '/tmp/**'
     
 # Substitutions
 options:
