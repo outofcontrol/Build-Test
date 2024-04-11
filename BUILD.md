@@ -2,7 +2,7 @@
 
 Instructions for building this repository on Linux, Windows, and MacOS.
 
-## Table Of Contents
+## Table Of Content
 
 - [Build Instructions](#build-instructions)
   - [Table Of Contents](#table-of-contents)
