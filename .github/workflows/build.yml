@@ -1,17 +1,13 @@
 # name: CI Build
-
 # concurrency:
 #   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id  }}
 #   cancel-in-progress: true
-
 # on:
 #   push:
 #   pull_request:
 #     branches:
 #     - main
-
 # permissions: read-all
-
 # jobs:
 #   trigger-codebuild:
 #     runs-on: ubuntu-latest
@@ -47,10 +43,8 @@
 #               --artifacts "type=S3,location=khr-github-build-artifacts,packaging=ZIP" \
 #               --environment "type=LINUX_CONTAINER,computeType=BUILD_GENERAL1_LARGE,image=aws/codebuild/standard:5.0" \
 #               --service-role arn:aws:iam::452667803910:role/service-role/codebuild-Vulka-Loader-Test-service-role
-
-
-      # Choose your own OS and AMI
-      #
+# Choose your own OS and AMI
+#
 #       - name: Start CodeBuild
 #         id: codebuild
 #         run: |
@@ -62,7 +56,6 @@
 #           echo "::set-output name=buildId::$buildId"
 #         env:
 #           AWS_DEFAULT_REGION: us-east-1
-
 #       - name: Wait for CodeBuild result
 #         run: |
 #           aws codebuild batch-get-builds --ids ${{ steps.codebuild.outputs.buildId }} --query 'builds[].buildStatus' --output text
