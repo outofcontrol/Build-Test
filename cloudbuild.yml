@@ -1,4 +1,5 @@
 steps:
+
   # Pre-build configuration
   - name: 'us-west2-docker.pkg.dev/github-test-builds-419921/ooctest/vulkan-loader-image:latest'
     entrypoint: 'bash'
@@ -23,13 +24,26 @@ steps:
       - '-c'
       - cmake --install build --prefix /tmp
 
+  # Check if files in correct place
+  - name: 'ubuntu'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      echo "Listing /tmp/lib:"
+      ls -alh /tmp/lib/ || echo "/tmp/lib does not exist"
+      echo "Listing /workspace/tmp/lib:"
+      ls -alh /workspace/tmp/lib/ || echo "/workspace/tmp/lib does not exist"
+    
 # This section is to specify artifacts to be stored
 artifacts:
   objects:
     location: 'gs://test-ooc/${_ARTIFACT_NAME}/'
     paths:
-      - '/tmp/lib/**'
+      - '/workspace/tmp/lib/**'
     
 # Substitutions
+options:
+  automapSubstitutions: true
 substitutions:
   _ARTIFACT_NAME: 'Vulkan-Loader-$BUILD_ID'
