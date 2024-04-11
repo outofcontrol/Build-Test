@@ -30,10 +30,10 @@ steps:
     args:
     - '-c'
     - |
-      echo "Listing /tmp/lib:"
-      ls -alh /tmp/lib/ || echo "/tmp/lib does not exist"
-      echo "Listing /workspace/tmp/lib:"
-      ls -alh /workspace/tmp/lib/ || echo "/workspace/tmp/lib does not exist"
+      echo "Listing /tmp:"
+      ls -alh /tmp || echo "/tmp does not exist"
+      echo "Listing /build:"
+      ls -alh /build || echo "/build does not exist"
     
 # This section is to specify artifacts to be stored
 artifacts:
